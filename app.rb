@@ -7,6 +7,7 @@ class FileStorage < Sinatra::Base
   config_file './config.yml'
   
   before do
+    # TODO: sanitize file name
     @file_name = request.path_info
     @file_path = settings.fileserver_root + @file_name
   end
@@ -14,5 +15,11 @@ class FileStorage < Sinatra::Base
   get '/*' do
     halt 404 unless File.exists? @file_path
     File.open(@file_path).read
+  end
+  
+  post '/*' do
+    halt 406 if File.exists? @file_path
+    File.open(@file_path, 'w') {|f| f.write(request.body) }
+    status 201
   end
 end

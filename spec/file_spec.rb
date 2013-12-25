@@ -46,4 +46,16 @@ describe FileStorage do
       expect(last_response.status).to eq 201
     end
   end
+  
+  context 'chech file existence' do
+    it 'returns status code 200 if file exists' do
+      head '/existent_file.txt'
+      expect(last_response.status).to eq 200
+    end
+    
+    it 'returns status code 404 when file not found' do
+      get '/absent_file.txt'
+      expect(last_response.status).to eq 404
+    end
+  end
 end

@@ -22,4 +22,9 @@ class FileStorage < Sinatra::Base
     File.open(@file_path, 'w') {|f| f.write(request.body) }
     status 201
   end
+  
+  head '/*' do
+    halt 404 unless File.exists? @file_path
+    status 200
+  end
 end

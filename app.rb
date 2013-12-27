@@ -18,7 +18,7 @@ class FileStorage < Sinatra::Base
   end
   
   post '/*' do
-    halt 406 if File.exists? @file_path
+    halt 405 if File.exists? @file_path
     File.open(@file_path, 'w') {|f| f.write(request.body) }
     status 201
   end

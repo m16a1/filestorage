@@ -28,7 +28,7 @@ describe FileStorage do
   end
   
   context 'create new file' do
-    it 'returns status code 406 if file exists' do
+    it 'returns status code 405 if file exists' do
       post '/existent_file.txt'
       expect(last_response.status).to eq 405
     end

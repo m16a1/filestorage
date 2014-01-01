@@ -4,16 +4,20 @@ describe FileStorage do
   before do
     File.stub(:exists?).with('/srv/www/absent_file.txt').and_return false
     File.stub(:exists?).with('/srv/www/existent_file.txt').and_return true
-    File.stub_chain(:open, :read).and_return 'content'
+  
     io = double('IO')
+    File.stub(:open).with('/srv/www/existent_file.txt')
+      .and_return io
+    io.stub(:read).and_return 'content'        
+    
     File.stub(:open).with(kind_of(String), 'w').and_yield io
     io.stub(:write)
   end
   
   context 'get the file' do
-    it 'returns status code 404 when file not found' do
+    it 'returns "Not Found" error if file not found' do
       get '/absent_file.txt'
-      expect(last_response.status).to eq 404
+      expect(last_response.status).to eq HTTPCodes::NOT_FOUND
     end
     
     it 'returns status code 200 when file exists' do

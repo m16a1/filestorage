@@ -9,4 +9,12 @@ module RSpecMixin
   end
 end
 
+module HTTPCodes
+  NOT_FOUND = 404
+  OK = 200
+  CREATED = 201
+  NOT_ALLOWED = 405
+  INTERNAL_ERROR = 500
+end
+
 RSpec.configure { |c| c.include RSpecMixin }

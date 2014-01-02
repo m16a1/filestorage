@@ -43,4 +43,15 @@ describe DirectoryController do
       expect(last_response.status).to eq HTTPCodes::CREATED
     end
   end
+
+  context 'check directory existence' do
+    it 'returns "Not Found" if directory was not found' do
+      head '/absent_dir/'
+      expect(last_response.status).to eq 404
+    end
+    it 'returns status "OK" if directory exists' do
+      head '/existent_dir/'
+      expect(last_response.status).to eq 200
+    end
+  end
 end

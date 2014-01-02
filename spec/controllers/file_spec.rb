@@ -58,7 +58,7 @@ describe FileStorage do
     end
     
     it 'returns status code 404 when file not found' do
-      get '/absent_file.txt'
+      head '/absent_file.txt'
       expect(last_response.status).to eq 404
     end
   end

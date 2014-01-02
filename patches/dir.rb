@@ -6,7 +6,4 @@ class Dir
   def self.files(dirname)
     glob(dirname.chomp('/') + '/*') - subdirs(dirname)
   end
-
-  private
-  
 end

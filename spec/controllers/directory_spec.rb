@@ -6,7 +6,7 @@ describe DirectoryController do
     Dir.stub(:exists?).with('/srv/www/existent_dir/').and_return true
   end
   
-  context 'get the directory listing' do
+  context 'get directory listing' do
     before do
       Dir.stub(:files).and_return %w(Readme.md)
       Dir.stub(:subdirs).and_return %w(lib)
@@ -52,6 +52,18 @@ describe DirectoryController do
     it 'returns status "OK" if directory exists' do
       head '/existent_dir/'
       expect(last_response.status).to eq 200
+    end
+  end
+
+  context 'remove directory' do
+    it 'returns "Not Found" error if directory doesn\'t exist' do
+      delete '/absent_dir/'
+      expect(last_response.status).to eq HTTPCodes::NOT_FOUND
+    end
+    it 'returns "No Content" if directory was successfully removed' do
+      Dir.should_receive(:rmdir).once.with('/srv/www/existent_dir/')
+      delete '/existent_dir/'
+      expect(last_response.status).to eq HTTPCodes::NO_CONTENT
     end
   end
 end

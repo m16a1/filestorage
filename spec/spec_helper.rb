@@ -10,9 +10,10 @@ module RSpecMixin
 end
 
 module HTTPCodes
-  NOT_FOUND = 404
   OK = 200
   CREATED = 201
+  NO_CONTENT = 204
+  NOT_FOUND = 404
   NOT_ALLOWED = 405
   INTERNAL_ERROR = 500
 end

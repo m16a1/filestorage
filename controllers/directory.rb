@@ -17,4 +17,10 @@ class DirectoryController < Sinatra::Base
   head '/*/' do
     not_found unless Dir.exists? abs_path
   end
+
+  delete '/*/' do
+    not_found unless Dir.exists? abs_path
+    Dir.rmdir abs_path
+    no_content
+  end
 end

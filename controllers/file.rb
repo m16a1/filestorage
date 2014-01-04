@@ -20,4 +20,10 @@ class FileController < Sinatra::Base
     not_found unless File.exists? abs_path
     File.open(abs_path, 'wb') {|f| f.write(request.body) }
   end
+
+  delete '/*' do
+    not_found unless File.exists? abs_path
+    File.delete abs_path
+    no_content
+  end
 end

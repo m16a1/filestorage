@@ -73,4 +73,16 @@ describe FileStorage do
       expect(last_response.status).to eq HTTPCodes::OK
     end
   end
+
+  context 'remove file' do
+    it 'returns "Not Found" error if file not found' do
+      delete '/absent_file.txt'
+      expect(last_response.status).to eq HTTPCodes::NOT_FOUND
+    end
+    it 'returns "No Content" if file successfully removed' do
+      File.should_receive(:delete).once.with('/srv/www/existent_file.txt')
+      delete '/existent_file.txt'
+      expect(last_response.status).to eq HTTPCodes::NO_CONTENT
+    end
+  end
 end

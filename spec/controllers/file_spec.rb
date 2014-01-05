@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe FileStorage do
+describe FileController do
   before do
     File.stub(:exists?).with('/srv/www/absent_file.txt').and_return false
     File.stub(:exists?).with('/srv/www/existent_file.txt').and_return true
